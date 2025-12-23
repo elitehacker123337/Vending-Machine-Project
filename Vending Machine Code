@@ -1,0 +1,112 @@
+vending_machine = [
+    {'Code': 'A1', 'Product': 'Maltesers', 'Price': 4.25},
+    {'Code': 'A2', 'Product': 'Bounty', 'Price': 3.90},
+    {'Code': 'A3', 'Product': 'Kinder Bueno', 'Price': 4.75},
+    {'Code': 'A4', 'Product': 'Galaxy Flutes', 'Price': 4.75},
+    {'Code': 'A5', 'Product': 'Snickers', 'Price': 3.90},
+    {'Code': 'A6', 'Product': 'Peanuts', 'Price': 2.00},
+    {'Code': 'A7', 'Product': 'Twix', 'Price': 3.90},
+    {'Code': 'A8', 'Product': 'Sponge Cake', 'Price': 3.50},
+    {'Code': 'A9', 'Product': 'Lays Ketchup', 'Price': 2.00},
+    {'Code': 'A10', 'Product': 'Lays Spicy', 'Price': 2.00},
+    {'Code': 'B1', 'Product': 'Lays Vinegar', 'Price': 2.00},
+    {'Code': 'B2', 'Product': 'Forno Salt Chips', 'Price': 3.90},
+    {'Code': 'B3', 'Product': 'Barbican Pomegranate', 'Price': 4.75},
+    {'Code': 'B4', 'Product': 'Barbican Orange', 'Price': 3.00},
+    {'Code': 'B5', 'Product': 'Energy Drink', 'Price': 6.00},
+    {'Code': 'B6', 'Product': 'Kinder Bueno', 'Price': 4.75},
+    {'Code': 'B7', 'Product': 'RedBull White', 'Price': 3.45},
+    {'Code': 'B8', 'Product': 'RedBull Normal', 'Price': 3.75},
+    {'Code': 'B9', 'Product': 'Coca Cola', 'Price': 3.00},
+    {'Code': 'B10', 'Product': 'Water', 'Price': 1.00},
+]
+
+# Print the welcome message
+print("Welcome to my vending machine!")
+print() # Gives space for the text below
+
+# Display the menu/all the items in the vending machine in a specific format, allowing for spaced between code, product and price 
+# to make it look like a table
+print(f"{'Code':<6} {'Product':<25} {'Price'}")
+print("-" * 40)
+for item in vending_machine:
+    print(f"{item['Code']:<6} {item['Product']:<25} SAR{item['Price']:.2f}")
+print()
+
+# Ask a product code from the user
+name = input("Hello! Please enter your name to start your vending machine experience, or else type 'EXIT' to exit): \n").upper()
+welcome = True 
+
+while welcome: 
+    if name == 'EXIT': # allows the user to exit the program without selecting an item
+            print('Goodbye..')
+            welcome = False
+            break
+     
+# Find the product fom the user input
+    shopping = True
+    selected_items = []  # List to store all selected items
+    total_price = 0  # Running total
+    
+    while shopping:
+        product_code = input(f"Greetings {name}! please enter product code: ").upper()
+        
+        # Find the product from the dictionary list
+        selected_product = None
+        for item in vending_machine:
+            if item['Code'] == product_code:
+                selected_product = item
+                
+        
+        # Check if product exists in the list of dictionaries
+        if selected_product:
+            print(f"You selected: {selected_product['Product']} - ${selected_product['Price']:.2f}")
+            selected_items.append(selected_product)
+            total_price += selected_product['Price']
+            print(f"Current total: ${total_price:.2f}")
+        else:
+            print("Invalid product code. Please try again.")
+        
+        # Ask if user wants more items
+        print("\nWould you like to add another item? (y/n): ")
+        more_items = input().strip().lower()
+        
+        if more_items != 'y':
+            shopping = False
+    
+    # Display cart summary (what the empty 'selected_items' list is used for, the selected items were stored in the list and then displayed here)
+    print("\n--- Your Cart ---")
+    for item in selected_items:
+        print(f"{item['Product']}: ${item['Price']:.2f}")
+    print(f"\nTotal: ${total_price:.2f}")
+    
+    # Get payment from the user
+    # A payment loop keeps asking until sufficient payment is received
+    balance = 0  # Track total money inserted
+    paying = True
+    
+    while paying:
+        try:
+            payment = float(input(f"Please insert payment (Remaining: SAR{total_price - balance:.2f}): ")) #main payment input
+            balance += payment  # Allows checking if the payment is sufficient by meeting the required balance
+            
+            if balance < total_price:
+                remaining = total_price - balance
+                print(f"Insufficient payment. You need SAR{remaining:.2f} more. \n")
+            elif balance >= total_price:
+                change = balance - total_price
+                if change > 0:
+                    print(f"\nChange: SAR{change:.2f}")
+                
+                print("\nDispensing products...")
+                for item in selected_items:
+                    print(f"  - {item['Product']}")
+                
+                print("\nThank you for your purchase! Have a great day!")
+                paying = False  # Exit payment loop
+                welcome = False  # Exit main loop
+                
+        except ValueError:
+            print("Invalid amount. Please enter a valid number.\n")
+            
+  
