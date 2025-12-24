@@ -21,11 +21,11 @@ vending_machine = [
     {'Code': 'B10', 'Product': 'Water', 'Price': 1.00},
 ]
 
-# Print the welcome message
+#print the welcome message
 print("Welcome to my vending machine!")
-print() # Gives space for the text below
+print() #gives space for the text below
 
-# Display the menu/all the items in the vending machine in a specific format, allowing for spaced between code, product and price 
+#display the menu/all the items in the vending machine in a specific format, allowing for spaced between code, product and price 
 # to make it look like a table
 print(f"{'Code':<6} {'Product':<25} {'Price'}")
 print("-" * 40)
@@ -33,32 +33,33 @@ for item in vending_machine:
     print(f"{item['Code']:<6} {item['Product']:<25} SAR{item['Price']:.2f}")
 print()
 
-# Ask a product code from the user
+#ask a product code from the user
 name = input("Hello! Please enter your name to start your vending machine experience, or else type 'EXIT' to exit): \n").upper()
 welcome = True 
 
 while welcome: 
-    if name == 'EXIT': # allows the user to exit the program without selecting an item
+    if name == 'EXIT': #allows the user to exit the program without selecting an item
             print('Goodbye..')
-            welcome = False
-            break
+            welcome = False #'welcome' turns False in order to stop the while loop
+            break #exit the loop and stop the program, withou this it would still print goodbye and exit the loop, but it would continue 
+                  # onto the next lines of code
      
-# Find the product fom the user input
+#find the product fom the user input
     shopping = True
-    selected_items = []  # List to store all selected items
-    total_price = 0  # Running total
+    selected_items = []  #list to store all selected items (used to display the user's cart later in the code)
+    total_price = 0  #running total
     
     while shopping:
         product_code = input(f"Greetings {name}! please enter product code: ").upper()
         
-        # Find the product from the dictionary list
+        #find the product from the dictionary list
         selected_product = None
         for item in vending_machine:
             if item['Code'] == product_code:
                 selected_product = item
                 
         
-        # Check if product exists in the list of dictionaries
+        #check if product exists in the list of dictionaries
         if selected_product:
             print(f"You selected: {selected_product['Product']} - ${selected_product['Price']:.2f}")
             selected_items.append(selected_product)
@@ -67,46 +68,47 @@ while welcome:
         else:
             print("Invalid product code. Please try again.")
         
-        # Ask if user wants more items
+        #ask if user wants more items
         print("\nWould you like to add another item? (y/n): ")
         more_items = input().strip().lower()
         
-        if more_items != 'y':
-            shopping = False
+        if more_items != 'y': 
+            shopping = False #if user does not enter 'y' shopping becomes false to close the loop and move on to the enxt block of code
     
-    # Display cart summary (what the empty 'selected_items' list is used for, the selected items were stored in the list and then displayed here)
+    #display cart summary (what the empty 'selected_items' list is used for, the selected items were stored in the list and then displayed here)
     print("\n--- Your Cart ---")
     for item in selected_items:
-        print(f"{item['Product']}: ${item['Price']:.2f}")
+        print(f"{item['Product']}: ${item['Price']:.2f}") #using a for loop to display specific items from the 'selected_items' list
     print(f"\nTotal: ${total_price:.2f}")
     
-    # Get payment from the user
-    # A payment loop keeps asking until sufficient payment is received
-    balance = 0  # Track total money inserted
+    #get payment from the user
+    #a payment loop keeps asking until sufficient payment is received
+    balance = 0  #track total money inserted
     paying = True
     
-    while paying:
-        try:
+    while paying: #making a while loop allows for the user to input multiple amounts of money in case of insufficient payment
+        try: #Try Except in python is useful for loops and avoiding value errors
             payment = float(input(f"Please insert payment (Remaining: SAR{total_price - balance:.2f}): ")) #main payment input
-            balance += payment  # Allows checking if the payment is sufficient by meeting the required balance
+            balance += payment  #allows checking if the payment is sufficient by meeting the required balance
             
-            if balance < total_price:
-                remaining = total_price - balance
+            if balance < total_price: #if user input does not match the total price
+                remaining = total_price - balance #track the remaining balance by subtracting the total price by the user payment
                 print(f"Insufficient payment. You need SAR{remaining:.2f} more. \n")
-            elif balance >= total_price:
-                change = balance - total_price
-                if change > 0:
+            elif balance >= total_price: #if user enters more than total price
+                change = balance - total_price #track the change of the user
+                if change > 0: #print change, if present
                     print(f"\nChange: SAR{change:.2f}")
                 
                 print("\nDispensing products...")
-                for item in selected_items:
+                for item in selected_items: #dispense selected products from the cart list
                     print(f"  - {item['Product']}")
+
+                #print goodbye message when all other conditions have been met, and all previous lines of code have been completed
+                print("\nThank you for your purchase! Have a great day!") 
+                paying = False  #exit payment loop
+                welcome = False  #exit main loop
                 
-                print("\nThank you for your purchase! Have a great day!")
-                paying = False  # Exit payment loop
-                welcome = False  # Exit main loop
-                
-        except ValueError:
+        except ValueError: #print in case user enters an invalid input
             print("Invalid amount. Please enter a valid number.\n")
             
   
