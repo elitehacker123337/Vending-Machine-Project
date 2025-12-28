@@ -34,11 +34,11 @@ for item in vending_machine:
 print()
 
 #ask a product code from the user
-name = input("Hello! Please enter your name to start your vending machine experience, or else type 'EXIT' to exit): \n").upper()
+name = input("Hello! Please enter your name to start your vending machine experience, or else type 'EXIT' to exit): \n").capitalize()
 welcome = True 
 
 while welcome: 
-    if name == 'EXIT': #allows the user to exit the program without selecting an item
+    if name == 'Exit': #allows the user to exit the program without selecting an item
             print('Goodbye..')
             welcome = False #'welcome' turns False in order to stop the while loop
             break #exit the loop and stop the program, withou this it would still print goodbye and exit the loop, but it would continue 
