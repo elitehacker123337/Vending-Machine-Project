@@ -99,7 +99,7 @@ while welcome:
                 if change > 0: #print change, if present
                     print(f"\nChange: SAR{change:.2f}")
                 
-                print("\nDispensing products...")
+                print("\nDispensing products...") # I used ClaudeAI to help display the user's selected items after the payment condition is fulfilled
                 for item in selected_items: #dispense selected products from the cart list
                     print(f"  - {item['Product']}")
 
