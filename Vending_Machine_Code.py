@@ -61,10 +61,10 @@ while welcome:
         
         #check if product exists in the list of dictionaries
         if selected_product:
-            print(f"You selected: {selected_product['Product']} - ${selected_product['Price']:.2f}")
+            print(f"You selected: {selected_product['Product']} - SAR{selected_product['Price']:.2f}")
             selected_items.append(selected_product)
             total_price += selected_product['Price']
-            print(f"Current total: ${total_price:.2f}")
+            print(f"Current total: SAR{total_price:.2f}")
         else:
             print("Invalid product code. Please try again.")
         
@@ -78,8 +78,8 @@ while welcome:
     #display cart summary (what the empty 'selected_items' list is used for, the selected items were stored in the list and then displayed here)
     print("\n--- Your Cart ---")
     for item in selected_items:
-        print(f"{item['Product']}: ${item['Price']:.2f}") #using a for loop to display specific items from the 'selected_items' list
-    print(f"\nTotal: ${total_price:.2f}")
+        print(f"{item['Product']}: SAR{item['Price']:.2f}") #using a for loop to display specific items from the 'selected_items' list
+    print(f"\nTotal: SAR{total_price:.2f}")
     
     #get payment from the user
     #a payment loop keeps asking until sufficient payment is received
